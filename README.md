@@ -31,14 +31,12 @@ const { CasbinDynamoDBAdapter } = require('casbin-dynamodb-adapter');
     // Create adapter with configuration
     const adapter = await CasbinDynamoDBAdapter.newAdapter({
       region: 'us-east-1',
-      tableName: 'casbin-rules',
+      tableName: 'casbin-rules'
       // Uses default: hashKey: 'id' (MD5 hash primary key)
-      // Optional: for LocalStack
+      // AWS SDK uses IAM roles automatically (ECS, EC2, Lambda)
+      // Credentials only needed for LocalStack:
       // endpoint: 'http://localhost:4566',
-      // credentials: {
-      //   accessKeyId: 'test',
-      //   secretAccessKey: 'test'
-      // }
+      // credentials: { accessKeyId: 'test', secretAccessKey: 'test' }
     });
 
     const enforcer = await Casbin.newEnforcer('model.conf', adapter);

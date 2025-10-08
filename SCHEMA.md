@@ -70,10 +70,33 @@ resource "aws_dynamodb_table" "casbin_rules" {
 
 ## Adapter Configuration
 
+**Production (ECS/EC2/Lambda with IAM roles):**
+```javascript
+const adapter = await CasbinDynamoDBAdapter.newAdapter({
+  region: 'us-east-1',
+  tableName: 'casbin_rules'
+  // No credentials needed - uses IAM roles automatically
+});
+```
+
+**LocalStack Development:**
+```javascript
+const adapter = await CasbinDynamoDBAdapter.newAdapter({
+  region: 'us-east-1',
+  tableName: 'casbin_rules',
+  endpoint: 'http://localhost:4566',
+  credentials: {  // Required for LocalStack
+    accessKeyId: 'test',
+    secretAccessKey: 'test'
+  }
+});
+```
+
+**Legacy (AWS SDK v2):**
 ```javascript
 const adapter = new CasbinDynamoDBAdapter(dynamoClient, {
   tableName: 'casbin_rules',
-  hashKey: 'id'  // Must match primary key field
+  hashKey: 'id'
 });
 ```
 

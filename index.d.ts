@@ -3,8 +3,8 @@ export interface AdapterConfig {
     tableName: string;
     hashKey?: string;
     rangeKey?: string;
-    endpoint?: string;
-    credentials?: {
+    endpoint?: string;  // For LocalStack: 'http://localhost:4566'
+    credentials?: {     // Optional: Only needed for LocalStack or non-IAM environments
         accessKeyId: string;
         secretAccessKey: string;
     };
